@@ -28,28 +28,28 @@ jobs:
     
     - name: Validate main HTML files
       run: |
-        if [ -f "index.html" ]; then
+        if [ -f "src/index.html" ]; then
           echo "✅ index.html found"
         else
-          echo "❌ index.html not found"
+          echo "❌ index.html not found in src/"
           exit 1
         fi
     
     - name: Check CSS files
       run: |
-        if [ -f "styles.css" ] || [ -f "css/styles.css" ]; then
+        if [ -f "src/styles.css" ] || [ -f "src/css/styles.css" ]; then
           echo "✅ CSS files found"
         else
-          echo "❌ CSS files not found"
+          echo "❌ CSS files not found in src/"
           exit 1
         fi
     
     - name: Check JS files
       run: |
-        if [ -f "script.js" ] || [ -f "js/main.js" ]; then
+        if [ -f "src/script.js" ] || [ -f "src/js/main.js" ]; then
           echo "✅ JS files found"
         else
-          echo "❌ JS files not found"
+          echo "❌ JS files not found in src/"
           exit 1
         fi
     
