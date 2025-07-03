@@ -18,7 +18,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        cache: 'npm'
     
     - name: Install dependencies
       run: npm install
@@ -27,27 +26,30 @@ jobs:
       run: npm test
     
     - name: Validate main HTML files
-  run: |
-    if find src -name "*.html" | grep -q .; then
-      echo "✅ HTML files found"
-    else
-      echo "❌ No HTML files found in src/"
-      exit 1
-    fi
-
-- name: Check CSS files
-  run: |
-    if find src -name "*.css" | grep -q .; then
-      echo "✅ CSS files found"
-    else
-      echo "❌ No CSS files found in src/"
-      exit 1
-    fi
-
-- name: Check JS files
-  run: |
-    if find src -name "*.js" | grep -q .; then
-      echo "✅ JS files found"
-    else
-      echo "⚠️ No JS files found (optional)"
-    fi
+      run: |
+        if find src -name "*.html" | grep -q .; then
+          echo "✅ HTML files found"
+        else
+          echo "❌ No HTML files found in src/"
+          exit 1
+        fi
+    
+    - name: Check CSS files
+      run: |
+        if find src -name "*.css" | grep -q .; then
+          echo "✅ CSS files found"
+        else
+          echo "❌ No CSS files found in src/"
+          exit 1
+        fi
+    
+    - name: Check JS files
+      run: |
+        if find src -name "*.js" | grep -q .; then
+          echo "✅ JS files found"
+        else
+          echo "⚠️ No JS files found (optional)"
+        fi
+    
+    - name: Build project
+      run: npm run build
