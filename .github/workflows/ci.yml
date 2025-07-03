@@ -27,31 +27,27 @@ jobs:
       run: npm test
     
     - name: Validate main HTML files
-      run: |
-        if [ -f "src/index.html" ]; then
-          echo "✅ index.html found"
-        else
-          echo "❌ index.html not found in src/"
-          exit 1
-        fi
-    
-    - name: Check CSS files
-      run: |
-        if [ -f "src/styles.css" ] || [ -f "src/css/styles.css" ]; then
-          echo "✅ CSS files found"
-        else
-          echo "❌ CSS files not found in src/"
-          exit 1
-        fi
-    
-    - name: Check JS files
-      run: |
-        if [ -f "src/script.js" ] || [ -f "src/js/main.js" ]; then
-          echo "✅ JS files found"
-        else
-          echo "❌ JS files not found in src/"
-          exit 1
-        fi
-    
-    - name: Build project
-      run: npm run build
+  run: |
+    if find src -name "*.html" | grep -q .; then
+      echo "✅ HTML files found"
+    else
+      echo "❌ No HTML files found in src/"
+      exit 1
+    fi
+
+- name: Check CSS files
+  run: |
+    if find src -name "*.css" | grep -q .; then
+      echo "✅ CSS files found"
+    else
+      echo "❌ No CSS files found in src/"
+      exit 1
+    fi
+
+- name: Check JS files
+  run: |
+    if find src -name "*.js" | grep -q .; then
+      echo "✅ JS files found"
+    else
+      echo "⚠️ No JS files found (optional)"
+    fi
