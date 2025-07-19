@@ -1,0 +1,44 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Validate main HTML files
+      run: |
+        if find src -name "*.html" | grep -q .; then
+          echo "✅ HTML files found"
+        else
+          echo "❌ No HTML files found in src/"
+          exit 1
+        fi
+    
+    - name: Check CSS files
+      run: |
+        if find src -name "*.css" | grep -q .; then
+          echo "✅ CSS files found"
+        else
+          echo "❌ No CSS files found in src/"
+          exit 1
+        fi
+    
+    - name: Check JS files
+      run: |
+        if find src -name "*.js" | grep -q .; then
+          echo "✅ JS files found"
+        else
+          echo "⚠️ No JS files found (optional)"
+        fi
+    
+    - name: Basic validation passed
+      run: echo "✅ All basic validations passed successfully!"
