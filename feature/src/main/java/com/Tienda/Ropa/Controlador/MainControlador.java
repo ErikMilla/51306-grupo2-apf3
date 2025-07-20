@@ -8,7 +8,7 @@ public class MainControlador {
 
     @GetMapping({"", "/"})
     public String Inicio() {
-        return "index";
+        return "inicio";
     }
 
     @GetMapping("/nosotros")
