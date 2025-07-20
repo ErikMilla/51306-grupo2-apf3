@@ -26,24 +26,8 @@ public class MainControlador {
         return "login";
     }
 
-    @GetMapping("/intranet")
-    public String intranet() {
-        return "intranet";
-    }
-
     @GetMapping("/inicioCliente")
     public String inicioCliente() {
         return "inicioCliente";
     }
-
-    @GetMapping("/higiene")
-    public String higiene() {
-        return "higiene";
-    }
-
-    @GetMapping("/pañaleria")
-    public String pañaleria() {
-        return "pañaleria";
-    }
-
 }
