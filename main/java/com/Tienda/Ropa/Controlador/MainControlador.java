@@ -8,7 +8,7 @@ public class MainControlador {
 
     @GetMapping({"", "/"})
     public String Inicio() {
-        return "inicio";
+        return "index";
     }
 
     @GetMapping("/nosotros")
@@ -29,5 +29,10 @@ public class MainControlador {
     @GetMapping("/inicioCliente")
     public String inicioCliente() {
         return "inicioCliente";
+    }
+
+    @GetMapping("/intranet")
+    public String intranet() {
+        return "Intranet";
     }
 }

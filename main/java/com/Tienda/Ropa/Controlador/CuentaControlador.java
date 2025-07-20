@@ -58,7 +58,7 @@ public class CuentaControlador {
             newUser.setDireccion(registroDto.getDireccion());
             newUser.setRol("cliente");
             newUser.setFechacreacion(new Date());
-            newUser.setContraseña(bCryptEncoder.encode(registroDto.getContraseña()));
+            newUser.setContrasena(bCryptEncoder.encode(registroDto.getContraseña()));
             repo.save(newUser);
             modelo.addAttribute("registrarDto", new RegistroDto());
             modelo.addAttribute("success", true);

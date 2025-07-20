@@ -20,7 +20,7 @@ public class AppUserServicio implements UserDetailsService{
         AppUser appUser = repo.findByEmail(email);
         if(appUser !=null){
            var springUser = User.withUsername(appUser.getEmail())
-                   .password(appUser.getContraseña())
+                   .password(appUser.getContrasena())
                    .roles(appUser.getRol())
                    .build();
            return springUser;

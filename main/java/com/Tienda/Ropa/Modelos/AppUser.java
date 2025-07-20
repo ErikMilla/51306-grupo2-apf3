@@ -15,7 +15,7 @@ public class AppUser {
     private String email;
     private String telefono;
     private String direccion;
-    private String contraseña;
+    private String contrasena;
     private String rol;
     private Date fechacreacion;
 
@@ -67,12 +67,12 @@ public class AppUser {
         this.direccion = direccion;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getRol() {
