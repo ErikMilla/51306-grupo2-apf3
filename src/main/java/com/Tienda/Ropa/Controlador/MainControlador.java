@@ -36,14 +36,5 @@ public class MainControlador {
         return "inicioCliente";
     }
 
-    @GetMapping("/higiene")
-    public String higiene() {
-        return "higiene";
-    }
-
-    @GetMapping("/pañaleria")
-    public String pañaleria() {
-        return "pañaleria";
-    }
 
 }
