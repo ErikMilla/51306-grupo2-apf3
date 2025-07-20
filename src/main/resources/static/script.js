@@ -1,0 +1,1 @@
+// Archivo JS vacío para la tienda de ropa 
