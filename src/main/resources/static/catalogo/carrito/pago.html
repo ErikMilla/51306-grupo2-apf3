@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Pago</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/pago.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Formulario de Pago</h2>
+
+    <form>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Juan Pérez" required>
+            </div>
+            <div class="col-md-6">
+                <label for="correo" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="correo" placeholder="correo@example.com" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" placeholder="Av. Ejemplo 123, Lima, Perú" required>
+        </div>
+
+        <h5 class="mt-4 mb-3">Selecciona método de pago</h5>
+        <div class="d-flex flex-wrap gap-3">
+            <button type="button" class="btn btn-outline-dark" onclick="mostrarMetodo('paypal')">
+                <i class="fab fa-paypal me-2"></i> PayPal
+            </button>
+
+            <button type="button" class="btn btn-outline-primary" onclick="mostrarMetodo('visa')">
+                <i class="far fa-credit-card me-2"></i> Visa
+            </button>
+
+            <button type="button" class="btn btn-outline-success" onclick="mostrarMetodo('yape')">
+                <i class="fas fa-mobile-alt me-2"></i> Yape
+            </button>
+        </div>
+
+        <!-- PayPal -->
+        <div id="paypal-box" class="pago-box text-center">
+            <h5><i class="fab fa-paypal me-2"></i>Completa tu pago con PayPal</h5>
+            <a href="https://www.paypal.com/signin" target="_blank" class="btn btn-primary mt-3">
+                <i class="fab fa-paypal me-2"></i> Iniciar sesión en PayPal
+            </a>
+        </div>
+
+
+        <!-- Visa -->
+        <div id="visa-box" class="pago-box">
+            <h5><i class="fab fa-cc-visa me-2"></i>Ingresa los datos de tu tarjeta</h5>
+            <form id="form-visa" onsubmit="event.preventDefault(); confirmarPago();">
+                <div class="mb-3">
+                    <label for="visa-nombre" class="form-label">Nombre en la tarjeta</label>
+                    <input type="text" class="form-control" id="visa-nombre" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="visa-numero" class="form-label">Número de tarjeta</label>
+                    <input type="text" class="form-control" id="visa-numero" maxlength="16"
+                           placeholder="Ej. 4111111111111111" required
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="visa-expiracion" class="form-label">Expiración (MM/AA)</label>
+                        <input type="text" class="form-control" id="visa-expiracion"
+                               placeholder="MM/AA" required maxlength="5"
+                               pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                               title="Formato válido: MM/AA"
+                               oninput="
+                            let val = this.value.replace(/[^0-9]/g, '');
+                             if (val.length >= 3) {
+                                 this.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                                 } else {
+                                this.value = val;
+                                 }
+                                 ">
+                    </div>
+
+                    <div class="col">
+                        <label for="visa-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="visa-cvv" maxlength="3" required
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Pagar</button>
+            </form>
+        </div>
+
+
+        <!-- Yape -->
+        <div id="yape-box" class="pago-box text-center">
+            <h5><i class="fas fa-qrcode me-2"></i>Escanea con Yape</h5>
+            <img id="qr-yape" src="" alt="QR de Yape" class="my-3">
+            <p>Escanea el código con tu app de Yape para completar el pago.</p>
+            <button type="button" class="btn btn-success mt-3" onclick="confirmarPago()">Pagar</button>
+        </div>
+
+    </form>
+
+    <div class="mt-5 text-center">
+        <a href="carrito.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Volver al Carrito
+        </a>
+    </div>
+</div>
+
+<script>
+    function mostrarMetodo(metodo) {
+        document.getElementById('paypal-box').style.display = 'none';
+        document.getElementById('visa-box').style.display = 'none';
+        document.getElementById('yape-box').style.display = 'none';
+
+        if (metodo === 'paypal') {
+            document.getElementById('paypal-box').style.display = 'block';
+        } else if (metodo === 'visa') {
+            document.getElementById('visa-box').style.display = 'block';
+        } else if (metodo === 'yape') {
+            document.getElementById('yape-box').style.display = 'block';
+            const randomId = Math.floor(Math.random() * 100000);
+            const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PagoYape-${randomId}`;
+            document.getElementById('qr-yape').src = qrImg;
+        }
+    }
+    function mostrarMetodo(metodo) {
+        document.getElementById('paypal-box').style.display = 'none';
+        document.getElementById('visa-box').style.display = 'none';
+        document.getElementById('yape-box').style.display = 'none';
+
+        if (metodo === 'paypal') {
+            document.getElementById('paypal-box').style.display = 'block';
+        } else if (metodo === 'visa') {
+            document.getElementById('visa-box').style.display = 'block';
+        } else if (metodo === 'yape') {
+            document.getElementById('yape-box').style.display = 'block';
+            const randomId = Math.floor(Math.random() * 100000);
+            const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PagoYape-${randomId}`;
+            document.getElementById('qr-yape').src = qrImg;
+        }
+    }
+
+    // ✅ Esta es la función que muestra el mensaje y redirige
+    function confirmarPago() {
+        alert("✅ Compra exitosa");
+        setTimeout(() => {
+            window.location.href = "/index.html"; // Cambia si tienes otra ruta
+        }, 1500);
+    }
+</script>
+</body>
+</html>
