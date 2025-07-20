@@ -75,7 +75,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.Tienda.Ropa.RopaApplication</mainClass>
+                    <mainClass>com.Tienda.Ropa.TiendaDeRopaApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

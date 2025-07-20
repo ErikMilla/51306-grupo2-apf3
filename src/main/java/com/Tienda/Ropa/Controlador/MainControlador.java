@@ -30,4 +30,9 @@ public class MainControlador {
     public String inicioCliente() {
         return "inicioCliente";
     }
+
+    @GetMapping("/intranet")
+    public String intranet() {
+        return "Intranet";
+    }
 }
